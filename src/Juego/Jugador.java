@@ -25,14 +25,14 @@ public class Jugador {
 	}
 	
 	//Metodos
-	public boolean colocarBarco(int fila, int col, Barco b, char orientacion) {
+	public boolean colocarBarco(int fila, int col, int longitud, char orientacion) {
 		if (orientacion != 'H' || orientacion != 'V') {
 			return false;
 		}
-		if ((orientacion == 'H' && col + b.longitud > mapa[0].length) || (orientacion == 'V' && fila + b.longitud > mapa.length)) {
+		if ((orientacion == 'H' && col + longitud > mapa[0].length) || (orientacion == 'V' && fila + longitud > mapa.length)) {
             return false;
         }
-		for (int i = 0; i < b.longitud; i++) {
+		for (int i = 0; i < longitud; i++) {
 			if (orientacion == 'H' && mapa[fila][col + i] != 0) {
 				return false;
 			}
@@ -40,7 +40,7 @@ public class Jugador {
 				return false;
 			}
 		}
-		for (int i = 0; i < b.longitud; i++) {
+		for (int i = 0; i < longitud; i++) {
 			if (orientacion == 'H') {
 				mapa[fila][col + i ] = 1;
 			} else {
