@@ -11,8 +11,8 @@ import java.util.Scanner;
 public class Client {
 	public static void main(String[] args) {
 		Scanner ent=null;
-		BufferedReader entrada;
-		BufferedWriter salida;
+		BufferedReader entrada = null;
+		BufferedWriter salida = null;
 		try(Socket s=new Socket("localhost",55555)){
 			ent=new Scanner(System.in);
 			int opc;

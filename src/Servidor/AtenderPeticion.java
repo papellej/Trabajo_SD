@@ -23,8 +23,8 @@ public class AtenderPeticion implements Runnable {
 	@Override
 	public void run() {
 		int opc;
-		BufferedReader entrada;
-		BufferedWriter salida;
+		BufferedReader entrada = null;
+		BufferedWriter salida = null;
 		try {
 			entrada = new BufferedReader(new InputStreamReader(s.getInputStream(),"UTF-8"));
 			salida = new BufferedWriter(new OutputStreamWriter(s.getOutputStream(),"UTF-8"));

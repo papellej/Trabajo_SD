@@ -18,19 +18,29 @@ public class Jugador {
 	public void colocarBarco() {
 		
 	}
-	public class Barco{
-		private int longitud;
-		public Barco(int longitud) {
-			this.longitud=longitud;
-		}
-	}
+	
 	public void mostrarMapa() {
-		for(int[] fila : mapa){
-			for(int n : fila) {
+		System.out.print("\t");
+		for(int i=0; i<10;i++) {
+			System.out.print((char)(i+65));
+		}
+		System.out.println();
+		for(int i=0;i<10;i++){
+			System.out.print((i+1)+"\t");
+			for(int n : mapa[i]) {
 				System.out.print(n);
 			}
 			System.out.println();
 		}
 		
+	}
+	
+	
+	
+	public class Barco{
+		private int longitud;
+		public Barco(int longitud) {
+			this.longitud=longitud;
+		}
 	}
 }
