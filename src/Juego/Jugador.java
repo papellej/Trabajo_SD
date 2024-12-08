@@ -18,8 +18,29 @@ public class Jugador {
 			}
 		}
 	}
-	public void colocarBarco() {
-		
+	public boolean colocarBarco(int fila, int col, Barco b, char orientacion) {
+		if (orientacion != 'H' || orientacion != 'V') {
+			return false;
+		}
+		if ((orientacion == 'H' && col + b.longitud > mapa[0].length) || (orientacion == 'V' && fila + b.longitud > mapa.length)) {
+            return false;
+        }
+		for (int i = 0; i < b.longitud; i++) {
+			if (orientacion == 'H' && mapa[fila][col + i] != 0) {
+				return false;
+			}
+			if (orientacion == 'V' && mapa[fila + i][col] != 0) {
+				return false;
+			}
+		}
+		for (int i = 0; i < b.longitud; i++) {
+			if (orientacion == 'H') {
+				mapa[fila][col + i ] = 1;
+			} else {
+				mapa[fila + i][col] = 1;
+			}
+		}
+		return true;
 	}
 	
 	public void mostrarMapa() {
