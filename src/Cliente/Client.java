@@ -2,6 +2,7 @@ package Cliente;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -18,6 +19,7 @@ public class Client {
 			int opc;
 			entrada = new BufferedReader(new InputStreamReader(s.getInputStream(),"UTF-8"));
 			salida = new BufferedWriter(new OutputStreamWriter(s.getOutputStream(),"UTF-8"));
+			DataOutputStream salidaDatos = new DataOutputStream(s.getOutputStream());
 			do {
 			System.out.println(entrada.readLine());
 			System.out.println(entrada.readLine());
@@ -53,6 +55,29 @@ public class Client {
 			opc=Integer.parseInt(entrada.readLine());
 			if(opc==-55555) {
 				System.out.println("Coloca los barcos");
+				int numeroBarcos;
+				do {
+					System.out.println(entrada.readLine());
+					System.out.println("Introduzca la longitud del barco a elegir: ");
+					int longitud = Integer.parseInt(teclado.nextLine());
+					salidaDatos.writeInt(longitud);
+					salidaDatos.flush();
+					System.out.println("Introduzca la fila del barco: ");
+					int fila = Integer.parseInt(teclado.nextLine());
+					salidaDatos.writeInt(fila);
+					salidaDatos.flush();
+					System.out.println("Introduzca la columna del barco: ");
+					int columna = Integer.parseInt(teclado.nextLine());
+					salidaDatos.writeInt(columna);
+					salidaDatos.flush();
+					System.out.println("Introduzca la horientacion del barco: ");
+					char orientacion = teclado.nextLine().charAt(0);
+					salidaDatos.writeChar(orientacion);
+					salidaDatos.flush();
+					System.out.println(entrada.readLine());
+					numeroBarcos = Integer.parseInt(entrada.readLine()); 
+				} while (numeroBarcos > 0);
+				
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
