@@ -1,12 +1,15 @@
 package Juego;
 
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Jugador {
 	private int[][] mapa;
 	private List<Barco> barcos;
-	public Jugador() {
+	private Socket jug;
+	public Jugador(Socket jug) {
+		this.jug=jug;
 		mapa= new int[10][10];
 		barcos=new ArrayList<Barco>();
 		for(int i=1;i<=4;i++) {
