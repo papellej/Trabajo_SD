@@ -1,6 +1,9 @@
 package Juego;
 
 import java.net.Socket;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Partida {
 	private Jugador jug1;
@@ -15,7 +18,18 @@ public class Partida {
 		
 	}
 	public void empezarPartida() {
-		
+		ExecutorService pool = Executors.newFixedThreadPool(2);
+		try {
+			CountDownLatch barrera = new CountDownLatch(2);
+			pool.execute(new ColocarBarcos(jug1, barrera));
+			pool.execute(new ColocarBarcos(jug2, barrera));
+			barrera.await();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			pool.shutdown();
+		}
 	}
 	
 	

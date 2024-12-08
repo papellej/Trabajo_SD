@@ -10,6 +10,8 @@ import java.net.Socket;
 import java.util.Enumeration;
 import java.util.concurrent.ConcurrentHashMap;
 
+import Juego.Partida;
+
 public class AtenderPeticion implements Runnable {
 
 	public static ConcurrentHashMap<String,Socket> salas= new ConcurrentHashMap<String,Socket>();
@@ -23,6 +25,7 @@ public class AtenderPeticion implements Runnable {
 	@Override
 	public void run() {
 		int opc;
+		Socket sala=null;
 		BufferedReader entrada = null;
 		BufferedWriter salida = null;
 		try {
@@ -46,6 +49,7 @@ public class AtenderPeticion implements Runnable {
 					salas.put(nombreSala,s);
 					do {
 						salida.write("Esperando a que se unan a la sala\n");
+						salida.write("1. Actualizar sala(Comprobar si se han unido)\n");
 						salida.write("0. Salir de la sala\n");
 						salida.flush();
 						System.out.println(salas);
@@ -54,11 +58,12 @@ public class AtenderPeticion implements Runnable {
 					if(opc==0) {
 						salas.remove(nombreSala);
 					}else {
-						opc=4;
+						opc=-55555;
 					}
 					break;
 				case 2:
 					salida.write("Todas las salas disponibles\n");
+					salida.flush();
 					Enumeration<String> nombreSalas=salas.keys();
 					while(nombreSalas.hasMoreElements()) {
 						salida.write(nombreSalas.nextElement()+", ");
@@ -69,13 +74,17 @@ public class AtenderPeticion implements Runnable {
 				case 3:
 					salida.write("Introduce el nombre de la sala\n");
 					salida.flush();
-					Socket sala=salas.remove(entrada.readLine());
+					sala=salas.remove(entrada.readLine());
 					if(sala!=null) {
-						opc=4;
+						opc=-55555;
 					}
 				}
-			}while(opc!=4);
-			
+			}while(opc!=4 || opc!=-55555);
+			salida.write(opc+"\n");
+			if(sala!=null) {
+				Partida p = new Partida(sala, s);
+				p.empezarPartida();
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -18,6 +18,13 @@ public class Jugador {
 			}
 		}
 	}
+	
+	//Getters/Setters
+	public Socket getSocket() {
+		return jug;
+	}
+	
+	//Metodos
 	public boolean colocarBarco(int fila, int col, Barco b, char orientacion) {
 		if (orientacion != 'H' || orientacion != 'V') {
 			return false;
