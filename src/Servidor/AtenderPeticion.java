@@ -32,38 +32,28 @@ public class AtenderPeticion implements Runnable {
 			entrada = new BufferedReader(new InputStreamReader(s.getInputStream(),"UTF-8"));
 			salida = new BufferedWriter(new OutputStreamWriter(s.getOutputStream(),"UTF-8"));
 			do {
-				//Codigo en servidor
-				salida.write("Selecciona opcion: \n");
-				salida.write("1. Crear sala\n");
-				salida.write("2. Listar salas\n");
-				salida.write("3. Unirse a sala\n");
-				salida.write("4. Salir del servidor\n");
-				salida.flush();
 				System.out.println(salas);
 				opc=Integer.parseInt(entrada.readLine());
 				switch(opc){
 				case 1:
-					salida.write("Introduce el nombre de sala\n");
-					salida.flush();
 					String nombreSala=entrada.readLine();
 					salas.put(nombreSala,s);
 					do {
-						salida.write("Esperando a que se unan a la sala\n");
-						salida.write("1. Actualizar sala(Comprobar si se han unido)\n");
-						salida.write("0. Salir de la sala\n");
-						salida.flush();
 						System.out.println(salas);
 						opc=Integer.parseInt(entrada.readLine());
-					}while(opc!=0 || salas.contains(nombreSala));
+						if(!salas.contains(nombreSala)) {
+							opc=-55555;
+						}
+						salida.write(opc+"\n");
+						salida.flush();
+					}while(opc!=0 && opc!=-55555);
 					if(opc==0) {
 						salas.remove(nombreSala);
-					}else {
-						opc=-55555;
 					}
+					System.out.println(salas);
+					System.out.println(opc+" ");
 					break;
 				case 2:
-					salida.write("Todas las salas disponibles\n");
-					salida.flush();
 					Enumeration<String> nombreSalas=salas.keys();
 					while(nombreSalas.hasMoreElements()) {
 						salida.write(nombreSalas.nextElement()+", ");
@@ -72,15 +62,15 @@ public class AtenderPeticion implements Runnable {
 					salida.flush();
 					break;
 				case 3:
-					salida.write("Introduce el nombre de la sala\n");
-					salida.flush();
 					sala=salas.remove(entrada.readLine());
 					if(sala!=null) {
 						opc=-55555;
 					}
+					break;
 				}
-			}while(opc!=4 || opc!=-55555);
-			salida.write(opc+"\n");
+				salida.write(opc+"\n");
+				salida.flush();
+			}while(opc!=4 && opc!=-55555);
 			if(sala!=null) {
 				Partida p = new Partida(sala, s);
 				p.empezarPartida();
