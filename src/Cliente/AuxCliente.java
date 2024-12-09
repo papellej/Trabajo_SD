@@ -103,7 +103,7 @@ public class AuxCliente {
 		int columnaNum = (int) columna - 65;
 		salidaDatos.writeInt(columnaNum);
 		salidaDatos.flush();
-		System.out.println("Introduzca la horientacion del barco: ");
+		System.out.println("Introduzca la orientacion del barco: ");
 		char orientacion = teclado.nextLine().charAt(0);
 		salidaDatos.writeChar(orientacion);
 		salidaDatos.flush();

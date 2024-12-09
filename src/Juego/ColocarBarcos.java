@@ -47,7 +47,7 @@ public class ColocarBarcos extends Thread {
 					}else {
 						salida.write("El barco no ha podido colocarse\n");		
 					}
-				}else {
+				}else {;
 					salida.write("El barco no ha podido colocarse\n");						
 				}
 				salida.flush();

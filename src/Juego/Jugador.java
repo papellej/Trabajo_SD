@@ -37,7 +37,7 @@ public class Jugador {
 	
 	//Metodos
 	public boolean colocarBarco(int fila, int col, int longitud, char orientacion) {
-		if (orientacion != 'H' || orientacion != 'V') {
+		if (orientacion != 'H' && orientacion != 'V') {
 			return false;
 		}
 		if ((orientacion == 'H' && col + longitud > mapa[0].length) || (orientacion == 'V' && fila + longitud > mapa.length)) {
