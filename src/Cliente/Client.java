@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.util.Scanner;
+import Utilidad.*;
 
 public class Client {
 	public static void main(String[] args) {
@@ -63,35 +64,71 @@ public class Client {
 				int numeroBarcos;
 				do {
 					System.out.println(entrada.readLine());
-					colocarBarco(salidaDatos, teclado);
+					mostrarMapa(entrada);
+					leerBarco(salidaDatos, teclado);
 					System.out.println(entrada.readLine());
 					numeroBarcos = Integer.parseInt(entrada.readLine()); 
 				} while (numeroBarcos > 0);
-				
+				System.out.println("---------Comienza el juego----------");
+				int cod = Integer.parseInt(entrada.readLine());
+				while (cod != 2) {
+					if (cod == 0) {
+						System.out.println("---------Tu turno---------");
+						System.out.println("Leyenda: 0 desconocido, 1 barco enemigo golpeado, 2 agua");
+						mostrarMapa(entrada);
+						do {
+							leerCasilla(salidaDatos, teclado);
+						} while (Integer.parseInt(entrada.readLine()) != 1);
+						System.out.println(entrada.readLine());
+					} else {
+						System.out.println("---------Turno del rival---------");					
+						System.out.println(entrada.readLine());
+						System.out.println("Leyenda: 0 agua, 1 barco aliado, 2 barco aliado golpeado");	
+						mostrarMapa(entrada);
+					}
+					cod = Integer.parseInt(entrada.readLine());
+				}				
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}finally {
-			
+			Util.cerrar(teclado);
 		}
 	}
-	public static void colocarBarco(DataOutputStream salidaDatos, Scanner teclado) throws IOException {
-				System.out.println("Introduzca la longitud del barco a elegir: ");
-				int longitud = Integer.parseInt(teclado.nextLine());
-				salidaDatos.writeInt(longitud);
-				salidaDatos.flush();
-				System.out.println("Introduzca la fila del barco: ");
-				int fila = Integer.parseInt(teclado.nextLine());
-				salidaDatos.writeInt(fila);
-				salidaDatos.flush();
-				System.out.println("Introduzca la columna del barco: ");
-				int columna = Integer.parseInt(teclado.nextLine());
-				salidaDatos.writeInt(columna);
-				salidaDatos.flush();
-				System.out.println("Introduzca la horientacion del barco: ");
-				char orientacion = teclado.nextLine().charAt(0);
-				salidaDatos.writeChar(orientacion);
-				salidaDatos.flush();
+	public static void leerBarco(DataOutputStream salidaDatos, Scanner teclado) throws IOException {
+		System.out.println("Introduzca la longitud del barco a elegir: ");
+		int longitud = Integer.parseInt(teclado.nextLine());
+		salidaDatos.writeInt(longitud);
+		salidaDatos.flush();
+		System.out.println("Introduzca la fila del barco: ");
+		int fila = Integer.parseInt(teclado.nextLine());
+		salidaDatos.writeInt(fila-1);
+		salidaDatos.flush();
+		System.out.println("Introduzca la columna del barco: ");
+		char columna = teclado.nextLine().charAt(0);
+		int columnaNum = (int) columna - 65;
+		salidaDatos.writeInt(columnaNum);
+		salidaDatos.flush();
+		System.out.println("Introduzca la horientacion del barco: ");
+		char orientacion = teclado.nextLine().charAt(0);
+		salidaDatos.writeChar(orientacion);
+		salidaDatos.flush();
+	}
+	public static void mostrarMapa(BufferedReader entrada) throws IOException{
+		for (int i = 0; i < 11; i++) {
+			System.out.println(entrada.readLine());
+		}
+	}
+	public static void leerCasilla(DataOutputStream salidaDatos, Scanner teclado) throws IOException {
+		System.out.println("Introduzca la fila de la casilla a golpear: ");
+		int fila = Integer.parseInt(teclado.nextLine());
+		salidaDatos.writeInt(fila-1);
+		salidaDatos.flush();
+		System.out.println("Introduzca la columna de la casilla a golpear: ");
+		char columna = teclado.nextLine().charAt(0);
+		int columnaNum = (int) columna - 65;
+		salidaDatos.writeInt(columnaNum);
+		salidaDatos.flush();
 	}
 }
 
