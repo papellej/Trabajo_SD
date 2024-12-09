@@ -40,8 +40,8 @@ public class AtenderPeticion implements Runnable {
 					salas.put(nombreSala,s);
 					do {
 						System.out.println(salas);
-						opc=Integer.parseInt(entrada.readLine());
-						if(!salas.contains(nombreSala)) {
+//						opc=Integer.parseInt(entrada.readLine());
+						if(!salas.containsKey(nombreSala)) {
 							opc=-55555;
 						}
 						salida.write(opc+"\n");

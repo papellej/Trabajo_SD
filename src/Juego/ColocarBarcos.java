@@ -39,14 +39,18 @@ public class ColocarBarcos extends Thread {
 				int fila=entrada.readInt();
 				int columna=entrada.readInt();
 				char orientacion=entrada.readChar();
+				System.out.println(fila+" "+columna+" "+longitud+" "+orientacion);
 				if(barcos.contains((Integer)longitud)) {
 					if(jug.colocarBarco(fila, columna, longitud, orientacion)) {
 						barcos.remove((Integer)longitud);
 						salida.write("El barco se ha colocado correctamente\n");
+					}else {
+						salida.write("El barco no ha podido colocarse\n");		
 					}
 				}else {
 					salida.write("El barco no ha podido colocarse\n");						
 				}
+				salida.flush();
 				salida.write(barcos.size()+"\n");
 				salida.flush();
 			}

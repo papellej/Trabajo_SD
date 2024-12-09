@@ -15,6 +15,13 @@ public class Jugador {
 	public Jugador(Socket jug) {
 		this.jug=jug;
 		mapa= new int[10][10];
+		mapaDisparos= new int[10][10];
+		for(int i=0;i<10;i++){
+			for(int j=0;j<10;j++) {
+				mapa[i][j]=0;
+				mapaDisparos[i][j]=0;
+			}
+		}
 		barcos=new ArrayList<Barco>();
 		for(int i=1;i<=4;i++) {
 			for(int j=i;j<=4;j++) {
@@ -115,8 +122,8 @@ public class Jugador {
 		salida.newLine();
 		for(int i=0;i<10;i++){
 			salida.write((i+1)+"\t");
-			for(int n : mapaDisparos[i]) {
-				salida.write(n);
+			for(int n : mapa[i]) {
+				salida.write(n+"");
 			}
 			salida.newLine();
 		}
@@ -132,7 +139,7 @@ public class Jugador {
 		for(int i=0;i<10;i++){
 			salida.write((i+1)+"\t");
 			for(int n : mapaDisparos[i]) {
-				salida.write(n);
+				salida.write(n+"");
 			}
 			salida.newLine();
 		}
