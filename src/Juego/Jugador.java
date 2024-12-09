@@ -1,11 +1,15 @@
 package Juego;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Jugador {
 	private int[][] mapa;
+	private int[][] mapaDisparos;
 	private List<Barco> barcos;
 	private Socket jug;
 	public Jugador(Socket jug) {
@@ -50,20 +54,89 @@ public class Jugador {
 		return true;
 	}
 	
-	public void mostrarMapa() {
-		System.out.print("\t");
-		for(int i=0; i<10;i++) {
-			System.out.print((char)(i+65));
-		}
-		System.out.println();
+	public boolean haPerdido() {
 		for(int i=0;i<10;i++){
-			System.out.print((i+1)+"\t");
 			for(int n : mapa[i]) {
-				System.out.print(n);
+				if(n!=0) {
+					return false;
+				}
 			}
 			System.out.println();
 		}
-		
+		return true;
+	}
+	public boolean puedeHacerDisparo(int fila, int columna) {
+		if(0<fila && fila<=10 && 0<columna && columna<=10) {
+			return mapaDisparos[fila][columna]==0;
+		}
+		return false;
+	}
+	public void hacerDisparo(int fila, int columna, boolean golpeado) {
+		if(golpeado) {
+			mapaDisparos[fila][columna]=1;
+		}else {
+			mapaDisparos[fila][columna]=2;
+		}
+	}
+	public boolean recibirDisparo(int fila, int columna) {
+		if(mapa[fila][columna]==1) {
+			mapa[fila][columna]=2;
+			return true;
+		}
+		return false;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public void mostrarMapa() throws IOException {
+		BufferedWriter salida = new BufferedWriter(new OutputStreamWriter(jug.getOutputStream(),"UTF-8"));
+		salida.write("\t");
+		for(int i=0; i<10;i++) {
+			salida.write((char)(i+65));
+		}
+		salida.newLine();
+		for(int i=0;i<10;i++){
+			salida.write((i+1)+"\t");
+			for(int n : mapaDisparos[i]) {
+				salida.write(n);
+			}
+			salida.newLine();
+		}
+		salida.flush();
+	}
+	public void mostrarMapaDisparos() throws IOException {
+		BufferedWriter salida = new BufferedWriter(new OutputStreamWriter(jug.getOutputStream(),"UTF-8"));
+		salida.write("\t");
+		for(int i=0; i<10;i++) {
+			salida.write((char)(i+65));
+		}
+		salida.newLine();
+		for(int i=0;i<10;i++){
+			salida.write((i+1)+"\t");
+			for(int n : mapaDisparos[i]) {
+				salida.write(n);
+			}
+			salida.newLine();
+		}
+		salida.flush();
 	}
 	
 	

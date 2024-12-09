@@ -34,6 +34,7 @@ public class ColocarBarcos extends Thread {
 				}
 				salida.newLine();
 				salida.flush();
+				jug.mostrarMapa();
 				int longitud=entrada.readInt();
 				int fila=entrada.readInt();
 				int columna=entrada.readInt();
