@@ -35,11 +35,13 @@ public class Partida {
 			pool.execute(new ColocarBarcos(jug[0], barrera));
 			pool.execute(new ColocarBarcos(jug[1], barrera));
 			barrera.await();
+			
 			int i=0;
 			while(!jug[i%2].haPerdido()) {
 				salida[i%2].write((i%2)+"\n");
+				salida[i%2].flush();
 				salida[i%2+1].write((i%2+1)+"\n");
-
+				salida[i%2+1].flush();
 				jug[i%2].mostrarMapaDisparos();
 				boolean disparoHecho;
 				do {
@@ -65,7 +67,9 @@ public class Partida {
 				i++;
 			}
 			salida[i%2].write(2+"\n");
+			salida[i%2].flush();
 			salida[i%2+1].write(2+"\n");
+			salida[i%2+1].flush();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

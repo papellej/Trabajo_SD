@@ -72,7 +72,7 @@ public class AuxCliente {
 						mostrarMapa(entrada);
 						do {
 							leerCasilla(salidaDatos, teclado);
-						} while (Integer.parseInt(entrada.readLine()) != 1);
+						} while (!entrada.readLine().equals("true"));
 						System.out.println(entrada.readLine());
 					} else {
 						System.out.println("---------Turno del rival---------");					
