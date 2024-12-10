@@ -28,7 +28,7 @@ public class AuxCliente {
 			System.out.println("3. Unirse a sala");
 			System.out.println("4. Salir del servidor");
 
-			opc=Integer.parseInt(teclado.nextLine());
+			opc=Util.tryParseInt(teclado);
 			salida.write(opc+"\n");
 			salida.flush();
 			switch(opc){
@@ -90,12 +90,10 @@ public class AuxCliente {
 		}
 	}
 	public static void leerBarco(DataOutputStream salidaDatos, Scanner teclado) throws IOException {
-		System.out.println("Introduzca la longitud del barco a elegir: ");
-		int longitud = Integer.parseInt(teclado.nextLine());
+		int longitud = Util.tryParseInt(teclado, "Introduzca la longitud del barco a elegir: ");
 		salidaDatos.writeInt(longitud);
 		salidaDatos.flush();
-		System.out.println("Introduzca la fila del barco: ");
-		int fila = Integer.parseInt(teclado.nextLine());
+		int fila = Util.tryParseInt(teclado, "Introduzca la fila del barco: ");
 		salidaDatos.writeInt(fila-1);
 		salidaDatos.flush();
 		System.out.println("Introduzca la columna del barco: ");
@@ -114,8 +112,7 @@ public class AuxCliente {
 		}
 	}
 	public static void leerCasilla(DataOutputStream salidaDatos, Scanner teclado) throws IOException {
-		System.out.println("Introduzca la fila de la casilla a golpear: ");
-		int fila = Integer.parseInt(teclado.nextLine());
+		int fila = Util.tryParseInt(teclado, "Introduzca la fila de la casilla a golpear: ");
 		salidaDatos.writeInt(fila-1);
 		salidaDatos.flush();
 		System.out.println("Introduzca la columna de la casilla a golpear: ");
