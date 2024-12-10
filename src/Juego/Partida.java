@@ -40,8 +40,8 @@ public class Partida {
 			while(!jug[i%2].haPerdido()) {
 				salida[i%2].write((i%2)+"\n");
 				salida[i%2].flush();
-				salida[i%2+1].write((i%2+1)+"\n");
-				salida[i%2+1].flush();
+				salida[(i+1)%2].write(((i+1)%2)+"\n");
+				salida[(i+1)%2].flush();
 				jug[i%2].mostrarMapaDisparos();
 				boolean disparoHecho;
 				do {
@@ -51,7 +51,7 @@ public class Partida {
 					salida[i%2].write(disparoHecho+"\n");
 					salida[i%2].flush();
 					if(disparoHecho) {
-						if(jug[i%2+1].recibirDisparo(fila, columna)) {
+						if(jug[(i+1)%2].recibirDisparo(fila, columna)) {
 							jug[i%2].hacerDisparo(fila, columna, true);
 							salida[i%2].write("Ha golpeado\n");
 						}else {
@@ -59,17 +59,17 @@ public class Partida {
 							salida[i%2].write("Ha tocado agua\n");
 						}
 						salida[i%2].flush();
-						salida[i%2+1].write("El rival ha disparado a la casilla "+(fila+1)+" "+(char)(columna+65)+"\n");
-						salida[i%2+1].flush();
+						salida[(i+1)%2].write("El rival ha disparado a la casilla "+(fila+1)+" "+(char)(columna+65)+"\n");
+						salida[(i+1)%2].flush();
 					}
 				}while(!disparoHecho);
-				jug[i%2+1].mostrarMapa();
+				jug[(i+1)%2].mostrarMapa();
 				i++;
 			}
 			salida[i%2].write(2+"\n");
 			salida[i%2].flush();
-			salida[i%2+1].write(2+"\n");
-			salida[i%2+1].flush();
+			salida[(i+1)%2].write(2+"\n");
+			salida[(i+1)%2].flush();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
