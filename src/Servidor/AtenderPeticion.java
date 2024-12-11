@@ -11,6 +11,7 @@ import java.util.Enumeration;
 import java.util.concurrent.ConcurrentHashMap;
 
 import Juego.Partida;
+import Utilidad.Util;
 
 public class AtenderPeticion implements Runnable {
 
@@ -39,13 +40,14 @@ public class AtenderPeticion implements Runnable {
 					String nombreSala=entrada.readLine();
 					salas.put(nombreSala,s);
 					do {
-						System.out.println(salas);
-//						opc=Integer.parseInt(entrada.readLine());
+						if(entrada.ready()) {
+							opc=Integer.parseInt(entrada.readLine());
+						}
 						if(!salas.containsKey(nombreSala)) {
 							opc=-55555;
+							salida.write(opc+"\n");
+							salida.flush();
 						}
-						salida.write(opc+"\n");
-						salida.flush();
 					}while(opc!=0 && opc!=-55555);
 					if(opc==0) {
 						salas.remove(nombreSala);

@@ -2,10 +2,13 @@ package Cliente;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.ByteArrayInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.PrintStream;
 import java.net.Socket;
 import java.util.Scanner;
 import Utilidad.*;
@@ -27,8 +30,7 @@ public class Client {
 			System.out.println("2. Listar salas");
 			System.out.println("3. Unirse a sala");
 			System.out.println("4. Salir del servidor");
-
-			opc=Integer.parseInt(teclado.nextLine());
+			opc=Util.tryParseInt(teclado);
 			salida.write(opc+"\n");
 			salida.flush();
 			switch(opc){
@@ -36,15 +38,21 @@ public class Client {
 				System.out.println("Introduce el nombre de sala");
 				salida.write(teclado.nextLine()+"\n");
 				salida.flush();
+				BufferedReader entradaTecl = new BufferedReader(new InputStreamReader(System.in, "UTF-8"));
 				do {
-					System.out.println("Esperando a que se unan a la sala");
-					System.out.println("1. Actualizar sala(Comprobar si se han unido)");
-					System.out.println("0. Salir de la sala");
-					opc=Integer.parseInt(teclado.nextLine());
-					salida.write(opc+"\n");
-					salida.flush();
-					opc=Integer.parseInt(entrada.readLine());
+					if(entradaTecl.ready()) {
+						opc=Util.tryParseInt(teclado);
+						if(opc==0) {
+							salida.write(opc+"\n");
+							System.out.print(opc+"\n");
+							salida.flush();
+						}
+					}
+					if(entrada.ready()) {
+						opc=Integer.parseInt(entrada.readLine());
+					}
 				}while(opc!=0 && opc!=-55555);
+				System.out.print(opc+"\n");
 				break;
 			case 2:
 				System.out.println("Todas las salas disponibles");
@@ -69,7 +77,8 @@ public class Client {
 					System.out.println(entrada.readLine());
 					numeroBarcos = Integer.parseInt(entrada.readLine()); 
 				} while (numeroBarcos > 0);
-				System.out.println("---------Comienza el juego----------");
+				System.out.println("Esperando al otro jugador");
+				System.out.println(entrada.readLine());
 				int cod = Integer.parseInt(entrada.readLine());
 				while (cod != 2) {
 					if (cod == 0) {
@@ -96,12 +105,10 @@ public class Client {
 		}
 	}
 	public static void leerBarco(DataOutputStream salidaDatos, Scanner teclado) throws IOException {
-		System.out.println("Introduzca la longitud del barco a elegir: ");
-		int longitud = Integer.parseInt(teclado.nextLine());
+		int longitud = Util.tryParseInt(teclado, "Introduzca la longitud del barco a elegir: ");
 		salidaDatos.writeInt(longitud);
 		salidaDatos.flush();
-		System.out.println("Introduzca la fila del barco: ");
-		int fila = Integer.parseInt(teclado.nextLine());
+		int fila = Util.tryParseInt(teclado, "Introduzca la fila del barco: ");
 		salidaDatos.writeInt(fila-1);
 		salidaDatos.flush();
 		System.out.println("Introduzca la columna del barco: ");
@@ -120,8 +127,7 @@ public class Client {
 		}
 	}
 	public static void leerCasilla(DataOutputStream salidaDatos, Scanner teclado) throws IOException {
-		System.out.println("Introduzca la fila de la casilla a golpear: ");
-		int fila = Integer.parseInt(teclado.nextLine());
+		int fila = Util.tryParseInt(teclado, "Introduzca la fila de la casilla a golpear: ");
 		salidaDatos.writeInt(fila-1);
 		salidaDatos.flush();
 		System.out.println("Introduzca la columna de la casilla a golpear: ");

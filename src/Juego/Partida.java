@@ -18,10 +18,9 @@ public class Partida {
 		this.jug[0]=new Jugador(jugador1);
 		this.jug[1]=new Jugador(jugador2);
 	}
-	public void colocarBarcos() {
+	
+	public void empezarPartida(){
 		
-	}
-	public void empezarPartida() {
 		ExecutorService pool = Executors.newFixedThreadPool(2);
 		try {
 			BufferedWriter[] salida = new BufferedWriter[2];
@@ -35,7 +34,10 @@ public class Partida {
 			pool.execute(new ColocarBarcos(jug[0], barrera));
 			pool.execute(new ColocarBarcos(jug[1], barrera));
 			barrera.await();
-			
+			salida[0].write("---------Comienza el juego----------");
+			salida[0].flush();
+			salida[1].write("---------Comienza el juego----------");
+			salida[1].flush();
 			int i=0;
 			while(!jug[i%2].haPerdido()) {
 				salida[i%2].write((i%2)+"\n");
@@ -70,10 +72,10 @@ public class Partida {
 			salida[i%2].flush();
 			salida[(i+1)%2].write(2+"\n");
 			salida[(i+1)%2].flush();
-		} catch (InterruptedException e) {
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {

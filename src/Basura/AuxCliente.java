@@ -1,4 +1,4 @@
-package Cliente;
+package Basura;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

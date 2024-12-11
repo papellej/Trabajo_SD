@@ -64,7 +64,7 @@ public class Jugador {
 	public boolean haPerdido() {
 		for(int i=0;i<10;i++){
 			for(int n : mapa[i]) {
-				if(n!=0) {
+				if(n==1) {
 					return false;
 				}
 			}
