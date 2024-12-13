@@ -9,6 +9,8 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import Utilidad.Util;
+
 public class Partida {
 	private Jugador[] jug;
 	
@@ -22,11 +24,11 @@ public class Partida {
 	public void empezarPartida(){
 		
 		ExecutorService pool = Executors.newFixedThreadPool(2);
+		DataInputStream[] entradaDatos= new DataInputStream[2];
+		BufferedWriter[] salida = new BufferedWriter[2];
 		try {
-			BufferedWriter[] salida = new BufferedWriter[2];
 			salida[0] = new BufferedWriter(new OutputStreamWriter(jug[0].getSocket().getOutputStream(),"UTF-8"));
 			salida[1] = new BufferedWriter(new OutputStreamWriter(jug[1].getSocket().getOutputStream(),"UTF-8"));
-			DataInputStream[] entradaDatos= new DataInputStream[2];
 			entradaDatos[0]=new DataInputStream(jug[0].getSocket().getInputStream());
 			entradaDatos[1]=new DataInputStream(jug[0].getSocket().getInputStream());
 			
@@ -79,7 +81,13 @@ public class Partida {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
+			Util.cerrar(entradaDatos[0]);
+			Util.cerrar(entradaDatos[1]);
+			Util.cerrar(salida[0]);
+			Util.cerrar(salida[1]);
 			pool.shutdown();
+			Util.cerrar(jug[0].getSocket());
+			Util.cerrar(jug[1].getSocket());
 		}
 	}
 	

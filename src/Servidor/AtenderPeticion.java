@@ -25,7 +25,7 @@ public class AtenderPeticion implements Runnable {
 	
 	@Override
 	public void run() {
-		int opc;
+		int opc=0;
 		Socket sala=null;
 		BufferedReader entrada = null;
 		BufferedWriter salida = null;
@@ -80,6 +80,12 @@ public class AtenderPeticion implements Runnable {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			if(opc!=-55555) {
+				Util.cerrar(salida);
+				Util.cerrar(entrada);
+				Util.cerrar(s);
+			}
 		}
 	}
 
