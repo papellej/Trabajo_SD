@@ -1,4 +1,4 @@
-package Cliente;
+package Basura;
 import java.awt.EventQueue;
 
 import javax.swing.JButton;
